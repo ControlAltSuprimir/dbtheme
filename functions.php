@@ -16,17 +16,17 @@ function template_styles(){
 
 
    /*Selector de año de artículos*/
-   wp_enqueue_script( 'custom', get_template_directory_uri()."/../base1.1/assets/js/custom.js", false,"1.1", true );
+   wp_enqueue_script( 'custom', get_template_directory_uri()."/../dbtheme/assets/js/custom.js", false,"1.1", true );
    wp_localize_script('custom','selectyear',array(
        'ajaxurl' => admin_url('admin-ajax.php')
    ));
 
    /*Global Sidebar*/
-   wp_enqueue_script( 'global-sidebar', get_template_directory_uri()."/../base1.1/assets/js/global-sidebar.js", false,"1.1", true );
-   wp_localize_script('global-sidebar','option_p',array(
+   wp_enqueue_script( 'sidebar', get_template_directory_uri()."/../dbtheme/assets/js/sidebar.js", false,"1.1", true );
+   wp_localize_script('sidebar','optionssidebar',array(
        'ajaxurl' => admin_url('admin-ajax.php')
    ));
-
+   
 }
 
 
@@ -122,7 +122,7 @@ add_action("wp_ajax_filterYear","filterYear");
 
 function filterYear(){
 
-  $pdo = new PDO('mysql:host=192.168.64.2;dbname=db-de-prueba;charset=utf8', 'root', '');
+  $pdo = new PDO('mysql:host=127.0.0.1;dbname=db-de-prueba;charset=utf8', 'root', '');
   $statement = $pdo->prepare('SELECT bad_authors,bad_title FROM bad_articles WHERE bad_year = ? ');
   $statement->execute(
     array(
@@ -135,7 +135,7 @@ function filterYear(){
            'bad_authors'    => $result['bad_authors'],
            'bad_title' => $result['bad_title']
        );
-       /*$return=push_array($return, array($result['id_artice']=>$result['title']));*/
+      
    }
 
    wp_send_json($return);
@@ -143,25 +143,29 @@ function filterYear(){
 }
 
 //Funcion de sidebar global
-add_action("wp_ajax_nopriv_filterYear","filterSidebar");
-add_action("wp_ajax_filterYear","filterSidebar");
+
+add_action("wp_ajax_nopriv_filterSidebar","filterSidebar");
+add_action("wp_ajax_filterSidebar","filterSidebar");
 
 function filterSidebar(){
 
-  $pdo = new PDO('mysql:host=192.168.64.2;dbname=db-de-prueba;charset=utf8', 'root', '');
-  $statement = $pdo->prepare('SELECT bad_authors,bad_title FROM bad_articles WHERE bad_year = ? ');
-  $statement->execute(
-    array(
-      $_POST["year"]
-    ) 
-  );
+  $pdo = new PDO('mysql:host=127.0.0.1;dbname=db-de-prueba;charset=utf8', 'root', '');
+
+    
+    $statement = $pdo->prepare('SELECT * FROM '.$_POST["selection"].' ORDER BY last_name');
+    $statement->execute(); 
+      
+
    $return=array();
    while($result = $statement->fetch()){
        $return[]=array(
-           'bad_authors'    => $result['bad_authors'],
-           'bad_title' => $result['bad_title']
+           'first_name'    =>   $result['first_name'],
+           'last_name'     =>   $result['last_name'],
+           'email'         =>   $result['email'],
+           'grade'         =>   $result['grade'],
+           'personal_url'  =>   $result['personal_url']
        );
-       /*$return=push_array($return, array($result['id_artice']=>$result['title']));*/
+       
    }
 
    wp_send_json($return);

@@ -24,7 +24,7 @@ get_header(); ?>
 <div class="row content" >
 
 
-<div class="col-sm-9">
+<div class="col-sm-9" id="left-content">
 			<h1 class="page-title"><?php single_cat_title();?></h1>
            
 				<hr>
@@ -69,16 +69,19 @@ get_header(); ?>
 
 	<div class="col-sm-3">
     
-			<table>
+	<table id="options_sidebar">
+   <tr>
+      <td value="2018" class="clickme">caca</td>
+   </tr>
+   <tr>
+      <td value="2017" class="clickme">2017</td>
+   </tr>
+   <tr>
+      <td value="2016" class="clickme">2016</td>
+   </tr>
+</table>
 			
-			<tr><th id="option_p">Autores1</th></tr>
-				<tr><th id="option_p">Autores2</th></tr>
-				<tr><th id="option_p">Autores3</th></tr>
-				<tr><th id="option_p">Autores4</th></tr>
-                
-                
 			
-			</table>
 
 	
 

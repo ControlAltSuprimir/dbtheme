@@ -1,30 +1,31 @@
 (function($){
-    $('#option_p').click(function(){
+    $('.clickme').click(function(){
         $.ajax({
-            url:optionp.ajaxurl,
+            url:optionssidebar.ajaxurl,
             method: "POST",
             data: {
-                "action": "filterYear",
-                "year":$(this).find(':selected').val()
+                "action": "filterSidebar",
+                "selection":$(this).attr('value')
             },
             beforeSend: function(){
-                $('#articles-this-year').html("Cargando...");
+                $('#left-content').html("Cargando...");
+                
             },
             success: function(data){
                 console.log(data);
                 let html=`<table>
                 <tr>
-                <th>Autores</th>
-                <th>Título</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
                 </tr>`;
                 data.forEach(item=>{
                     html+=`<tr>
-                    <td>${item.bad_authors}</td>
-                    <td>${item.bad_title}</td>
+                    <td>${item.first_name} ${item.last_name}</td>
+                    <td>${item.email}</td>
                     </tr>`
                 })
                 html+=`</table>`;
-                $("#caca").html(html);
+                $("#left-content").html(html);
 
             },
             error: function(error){
