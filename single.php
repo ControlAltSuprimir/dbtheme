@@ -2,7 +2,8 @@
 
 include "connection.php";
 
-$fields = get_fields();
+//$fields = get_fields();
+
 ?>
 
 <?php the_title();?>
