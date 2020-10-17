@@ -11,6 +11,7 @@
                 $('#articles-this-year').html("Cargando...");
             },
             success: function(data){
+                window.history.pushState({}, null, 'newUrl');
                 console.log(data);
                 let html=`<table>
                 <tr>
