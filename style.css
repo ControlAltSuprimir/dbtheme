@@ -22,4 +22,218 @@ body{
 
 #full-guidth {
     margin-left: -15px;
-  }
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+/**  =====================
+      Tabs css start
+==========================  **/
+
+.tab-list p {
+    padding: 10px;
+}
+
+.tab-with-img i {
+    position: absolute;
+    padding: 5px;
+}
+
+.tab-icon {
+    margin-bottom: 30px;
+}
+
+.tab-icon i {
+    padding-right: 10px;
+}
+
+.tab-below {
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+}
+
+.tab-below.nav-tabs .nav-link.active {
+    border-color: transparent #ddd #ddd #ddd;
+}
+
+.tab-below .nav-item {
+    margin-top: -2px;
+}
+
+.tab-below.nav-tabs .nav-link {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.card-header~.tab-icon .tab-with-img .sub-title i {
+    right: 10px;
+}
+
+.tab-with-img .nav-link {
+    position: relative;
+}
+
+.tabs-left,
+.tabs-right {
+    min-width: 120px;
+    vertical-align: top;
+    width: 300px;
+}
+
+.tabs-left,
+.tabs-left-content,
+.tabs-right,
+.tabs-right-content {
+    display: table-cell;
+}
+
+.nav-tabs.tabs-left .slide {
+    height: 35px;
+    width: 4px;
+    bottom: 15px;
+}
+
+.nav-tabs.tabs-right .slide {
+    height: 35px;
+    width: 4px;
+    bottom: 15px;
+    right: 0;
+}
+
+.product-edit .md-tabs .nav-item a {
+    padding: 0 0 10px !important;
+    color: #303548;
+}
+
+.product-edit .md-tabs .nav-item a .f-20 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.md-tabs.tabs-left .nav-item,
+.md-tabs.tabs-right .nav-item,
+.tabs-left .nav-item,
+.tabs-right .nav-item {
+    width: 100%;
+    position: relative;
+}
+
+.md-tabs {
+    position: relative;
+}
+
+.md-tabs .nav-item+.nav-item {
+    margin: 0;
+}
+
+.md-tabs .nav-link {
+    border: none;
+    color: #303548;
+}
+
+.md-tabs .nav-item {
+    width: calc(100% / 4);
+    text-align: center;
+}
+
+.md-tabs .nav-link:focus,
+.md-tabs .nav-link:hover {
+    border: none;
+}
+
+.md-tabs .nav-item .nav-link.active~.slide {
+    opacity: 1;
+    transition: all 0.3s ease-out;
+}
+
+.md-tabs .nav-item .nav-link~.slide {
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.md-tabs .nav-item.open .nav-link,
+.md-tabs .nav-item.open .nav-link:focus,
+.md-tabs .nav-item.open .nav-link:hover,
+.md-tabs .nav-link.active,
+.md-tabs .nav-link.active:focus,
+.md-tabs .nav-link.active:hover {
+    color: #4680ff;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.md-tabs .nav-item a {
+    padding: 20px 0 !important;
+    color: #303548;
+}
+
+.nav-tabs .slide {
+    background: #4680ff;
+    width: calc(100% / 4);
+    height: 4px;
+    position: absolute;
+    -webkit-transition: left 0.3s ease-out;
+    transition: left 0.3s ease-out;
+    bottom: 0;
+}
+
+.nav-tabs .slide .nav-item.show .nav-link,
+.nav-tabs .slide .nav-link {
+    color: #4680ff;
+}
+
+.img-tabs img {
+    width: 100px;
+    margin: 0 auto;
+}
+
+.img-tabs a {
+    opacity: 0.5;
+    transition: all ease-in-out 0.3s;
+}
+
+.img-tabs a span i {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    bottom: 10px;
+    right: 70px;
+}
+
+.img-tabs a img {
+    border: 3px solid;
+}
+
+.img-tabs a.active {
+    opacity: 1;
+    transition: all ease-in-out 0.3s;
+}
+
+.img-tabs .nav-item:first-child {
+    border-bottom: none;
+}
+
+#pc-left-panel-menu {
+    margin-bottom: 20px;
+}
+
+.h-active a {
+    color: #1b8bf9 !important;
+    font-weight: 600;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.b-none {
+    border: none !important;
+}
+
+
+/**====== Tabs css end ======**/
