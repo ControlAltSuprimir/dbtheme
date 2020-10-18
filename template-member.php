@@ -4,43 +4,59 @@ get_header();
 
 include "connection.php";
 
-
-
-
 $statement = $pdo->prepare('SELECT * FROM test_members ORDER BY last_name');
 $statement->execute(
-  array()
+    array()
 );
 ?>
 
 
 <?php
 
+
+
+if (isset($_GET['member']) and isset($_GET['type'])) {
+
 // Realizando la solicitud GET
+$type=$_GET['type'];
 $pdo_get = new PDO('mysql:host=127.0.0.1;dbname=db-de-prueba', 'root', '');
-$statement_get = $pdo_get->prepare('SELECT * FROM test_members ORDER BY last_name');
+$statement_get = $pdo_get->prepare('SELECT * FROM '.$_GET['type'].' ORDER BY last_name');
 $statement_get->execute(
-  array()
+    array()
 );
 $members_get = array();
 foreach ($statement_get as $state_get) {
-  array_push($members_get, $state_get);
+    array_push($members_get, $state_get);
 }
-
-
 $miembro_get = array();
 
-if (isset($_GET['nombre']) and isset($_GET['apellido'])) {
 
-  foreach ($members_get as $member_get) {
-    if ($member_get['first_name'] == $_GET['nombre']) {
-      $miembro_get = $member_get;
-      break;
+    foreach ($members_get as $member_get) {
+
+      if (($member_get['id_test_members']==$_GET['member']) or ($member_get['id_graduates']==$_GET['member'])) {
+            $miembro_get = $member_get;
+            break;
+        }
+      
     }
-  }
 }
+
 ?>
 
+<!-- Esta parte es para comprender la ruta en la que nos encontramos, tratando de sustraer los parámetros en la url-->
+<?php
+
+//$curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+$base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+$url = $base_url . $_SERVER["REQUEST_URI"];
+
+$currentUrl = basename($_SERVER['REQUEST_URI']);
+//echo 'El sitio actual es ' . $currentUrl . '<br>';
+//echo 'La dirección completa es ' . $url.'<br>';
+$url = strtok($url, '&');
+//echo $url;
+
+?>
 
 
 
@@ -51,35 +67,45 @@ if (isset($_GET['nombre']) and isset($_GET['apellido'])) {
     <div class="col-sm-9" id="left-content">
 
 
-      <h1>Académicos</h1>
-
 
 
 
       <?php
 
-      while ($result = $statement->fetch()) :
+if ($member_get) {
+    ?>
+            <h2><?php echo $member_get['first_name'] . ' ' . $member_get['last_name']; ?></h2>
+        <div class="row">
 
-        echo '<p>';
-        if ($result['personal_url'] == NULL) {
-          echo '<a value="test_members" class="clickme-sidebar-member" >';
-          echo $result['first_name'] . " " . $result['last_name'];
-          echo '</a>';
-        } else {
-          echo "<a href=" . $result['uchile_web'] . " target='_blank'>" . $result['first_name'] . " " . $result['last_name'] . "</a>.";
-        }
-        echo ". " . $result['grade'] . ", " . $result['university'] . ". Contacto: " . $result['email'] . "</p>";
-      endwhile;
-      ?>
+<div class="col-3">
+  FOTO
+</div>
+<div class="col-9">
 
-      <a class="profile" value="3">Hola</a><br>
-      <a class="click" value="3">Hola list</a>
+  <?php echo $member_get['grade']; ?> . <?php echo $member_get['university']; ?> , <?php echo $member_get['grade_year']; ?>.<br>
+  <?php echo $member_get['position']; ?><br>
+  <?php echo $member_get['email']; ?> <br>
+  <?php echo "Área de Investigación: " . $member_get['field']; ?><br>
 
-      <?php 
-      if($member_get){
-        echo 'Se recone el get cuyo nombre es'.$_GET["nombre"];
-      }
-      ?>
+  <?php
+if ($member_get['personal_url']) {
+        echo "<a href=" . $member_get['personal_url'] . " target='_blank'> Página Personal </a><br>";?>
+        <?php
+}?>
+</div>
+</div>
+    <?php
+} else {?>
+    <div class="row">
+      <h1>Personas</h1>
+
+<p>Contamos con un equipo de Académicos todos con grado de Doctor en las mejores universidades extranjeras y nacionales, con una gran trayectoria y con distintas especialidades. Además con un gran equipo humano de soporte para los docentes y estudiantes</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+    <?php }
+?>
+
+
     </div>
 
 
@@ -89,14 +115,14 @@ if (isset($_GET['nombre']) and isset($_GET['apellido'])) {
       <ul class="nav nav-tabs md-tabs tabs-right b-none" role="tablist">
         <!-- Primer Bloque Derecha -->
         <li class="nav-item">
-          <a class="nav-link active clickme-sidebar-member" data-toggle="tab" value="test_members" href="#docentes" role="tab">Docentes</a>
+          <a class="nav-link active clickme-sidebar-member" data-toggle="tab"  value="test_members" value1="<?php echo strtok($currentUrl,'&'); ?>" href="#docentes" role="tab">Docentes</a>
           <div class="slide"></div>
         </li>
 
         <!-- Fin Primer Bloque Derecha -->
         <!--Segundo Bloque Derecha -->
         <li class="nav-item">
-          <a class="nav-link clickme-sidebar-member" data-toggle="tab" value="graduates" href="#funcionarios" role="tab">Postgrado</a>
+          <a class="nav-link clickme-sidebar-member" data-toggle="tab" value="graduates" value1="<?php echo strtok($currentUrl,'&'); ?>" href="#funcionarios" role="tab">Postgrado</a>
           <div class="slide"></div>
         </li>
 
@@ -104,6 +130,7 @@ if (isset($_GET['nombre']) and isset($_GET['apellido'])) {
     </div>
 
   </div>
+
 </div><!-- primary -->
 
 

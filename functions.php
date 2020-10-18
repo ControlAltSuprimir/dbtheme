@@ -88,14 +88,14 @@ add_action("wp_ajax_filterSidebar", "filterSidebar");
 
 function filterSidebar()
 {
-    $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1); 
+    
     $pdo = new PDO('mysql:host=127.0.0.1;dbname=db-de-prueba;charset=utf8', 'root', '');
 
 
-    $statement = $pdo->prepare('SELECT * FROM ' . $_POST["selection"] . ' ORDER BY last_name');
+    $statement = $pdo->prepare('SELECT * FROM ' . $_POST["selection"] . ' ORDER BY last_name');//test_members o graduates
     $statement->execute();
 
-
+    //[1,2,3,4,5]{0:1,1:2,2:3,...}
     $return = array();
     while ($result = $statement->fetch()) {
         if ($_POST["selection"] == 'test_members') {
@@ -106,11 +106,11 @@ function filterSidebar()
                 'email'         =>   $result['email'],
                 'grade'         =>   $result['grade'],
                 'personal_url'  =>   $result['personal_url'],
-                'university'    => $result['university'],
-                'field'         =>  $result['field'],
-                'grade_year'    => $result['grade_year'],
+                'university'    =>   $result['university'],
+                'field'         =>   $result['field'],
+                'grade_year'    =>   $result['grade_year'],// int de 4 dígitos
                 'position'  => $result['position'],
-                'current'   => $curPageName
+                'current'   => $_POST['url']
             );
         } else {
             $return[] = array(
@@ -120,7 +120,7 @@ function filterSidebar()
                 'email'         =>   $result['email'],
                 'grade'         =>   $result['grade'],
                 'personal_url'  =>   $result['personal_url'],
-                'current'   => $curPageName
+                'current'   => $_POST['url']
             );
         }
     }

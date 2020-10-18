@@ -3,7 +3,7 @@ function printList(data) {
     if (data[0]['university'] == null) {
         data.forEach(item => {
             html += `<p>
-            <a class="clickme-sidebar-member" value="test_members">
+            <a href="${item.current}&type=graduates&member=${item.id_graduates}">
              ${item.first_name} ${item.last_name}
              </a>
              , contacto: ${item.email}.
@@ -14,9 +14,10 @@ function printList(data) {
         data.forEach(item => {
 
             html += `<p>
-            <a class="clickme-sidebar-member" value="test_members" href="?page_id=2&nombre=${item.first_name}&apellido=${item.last_name}">
-            ${item.first_name} ${item.last_name}. ${item.grade}, ${item.university}, ${item.grade_year}. Contacto: ${item.email}.
+            <a href="${item.current}&type=test_members&member=${item.id_test_members}">
+            ${item.first_name} ${item.last_name}. 
             </a>
+            ${item.grade}, ${item.university}, ${item.grade_year}. Contacto: ${item.email}.
             </p>`;
         })
     }
@@ -26,19 +27,20 @@ function printList(data) {
 (function($) {
     $('.clickme-sidebar-member').click(function() {
         $.ajax({
-            url: optionssidebar.ajaxurl,
+            url: optionssidebar.ajaxurl, //equivalente a option.php ->functions.php
             method: "POST",
             data: {
-                "action": "filterSidebar",
+                "action": "filterSidebar", //funcion dentro del functions.php?action=filterSidebar&url=&selection=
+                "url": $(this).attr('value1'), // <a class="clickme-sidebar-member" value1="currenturl" value="graduates">gRADUATES</a>
                 "selection": $(this).attr('value')
             },
-            beforeSend: function() {
-                $('#left-content').html("Cargando...<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+            beforeSend: function() { // class=. id=# id=left-content
+                $('#left-content').html(" <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
 
             },
             success: function(data) {
-                console.log(data);
-                //console.table(data);
+                //console.log(data);
+                console.table(data);
                 let html = ``;
                 if ((data[0]['university'] == null)) {
                     var Doctorantes = [];
@@ -55,11 +57,12 @@ function printList(data) {
                     html += printList(Magisteres);
                     html += `<h2>Doctorado</h2>`;
                     html += printList(Doctorantes);
-                    $("#left-content").html(html);
+                    $("#left-content").html(html).hide().fadeIn();
                 } else {
                     html += `<h2> Docentes </h2>`;
                     html += printList(data);
-                    $("#left-content").html(html);
+                    $("#left-content").html(html).hide().fadeIn();
+
 
 
                     /*
