@@ -25,14 +25,6 @@ while ($result = $statement->fetch()) {
 			<div id="login">
 				<hr />
 				<form action="" method="post">
-					<!--`position` varchar(90) NOT NULL,
-  `personal_url` varchar(200) DEFAULT NULL,
-  `university` varchar(90) NOT NULL,
-  `grade` varchar(90) NOT NULL,
-  `grade_year` year(4) NOT NULL,
-  `field` varchar(90) NOT NULL,
-  `email` varchar(200) NOT NULL,
--->
 					<div class="form-group row">
 						<label class="col-sm-4 col-form-label">Primer Nombre</label>
 						<div class="col-sm-8">
@@ -42,7 +34,7 @@ while ($result = $statement->fetch()) {
 					<div class="form-group row">
 						<label class="col-sm-4 col-form-label">Primer Apellido</label>
 						<div class="col-sm-8">
-							<input type="text" name="first_name" id="last_name" class="form-control" required="required" placeholder="Perez">
+							<input type="text" name="last_name" id="last_name" class="form-control" required="required" placeholder="Perez">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -101,9 +93,9 @@ while ($result = $statement->fetch()) {
 				$sql = "INSERT INTO test_members (last_name,first_name,position,university,grade,grade_year,field,email)
 VALUES ('" . $_POST["last_name"] . "','" . $_POST["first_name"] . "','" . $_POST["position"] . "','" . $_POST["university"] . "','" . $_POST["grade"] . "','" . $_POST["year"] . "','" . $_POST["field"] . "','" . $_POST["email"] . "')";
 				if ($dbh->query($sql)) {
-					echo "<script type= 'text/javascript'>alert('New Record Inserted Successfully');</script>";
+					echo "<script type= 'text/javascript'>alert('Docente agregado con éxito :)');</script>";
 				} else {
-					echo "<script type= 'text/javascript'>alert('Data not successfully Inserted.');</script>";
+					echo "<script type= 'text/javascript'>alert('No pudo agregarse nuevos datos.');</script>";
 				}
 
 				$dbh = null;
